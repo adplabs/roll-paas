@@ -71,10 +71,103 @@ query {
 The following `companySetup` mutation will onboard a new client to be managed by a partner:
 
 ```
-
+mutation submitCompany($input: CompanySetupInput!) {
+  submitEvent(authorizationContext: {
+    clientID: "101e599f-7825-40a4-b81b-aa29b2999352"
+  }) {
+    companySetup(input: $input) {
+      headers {
+        clientID
+        eventID
+        statusCode
+        success
+      }
+      validationErrors {
+        message
+        vocabulary
+      }
+      clientID
+    }
+  }
+}
 ```
 
+Where `input` variable is as follows:
+
+```
+{
+  "input": {
+        "company": {
+          "clientName": "My Business",
+          "federalEmployerID": "426715616",
+          "businessTypeCode": "LLC",
+          "industryCode": "Professional Services",
+          "locations": [
+            {
+              "addressStreetName": "1 ADP Blvd",
+              "zipCode": "07068",
+              "primaryLocationIndicator": true
+            }
+          ],
+          "hasBalancesIndicator": false,
+          "firstPartyContractorsPaidOnDemandIndicator": false,
+          "billingDetails": {
+            "billingRoutingNumber": "00000000",
+            "billingAccountNumber": "00000000",
+            "accountTypeCode": "Checking",
+            "bankName": "TD Bank"
+          }
+        },
+        "employees": [
+          {
+            "agreementCode": "Employee",
+            "associateTypeCode": "Individual",
+            "legalName": {
+              "firstName": "Emp",
+              "middleName": "L",
+              "lastName": "Oyee"
+            },
+            "personalPhoneFormattedNumber": "+00000000000",
+            "personalEmailAddress": "employee@etest.com",
+            "governmentRegistrationCode": "SSN",
+            "governmentRegistrationDocumentNumber": "000-00-0000",
+            "homeAddress": {
+              "addressStreetName": "1 ADP Blvd",
+              "zipCode": "07068"
+            },
+            "genderCode": "Male",
+            "jobDetails": {
+              "jobName": "Software Engineer",
+              "payRate": 100000,
+              "payFrequencyCode": "Yearly"
+            },
+            "ownershipDetails": {
+              "ownershipPercentage": 100,
+              "primaryOwnerIndicator": true
+            }
+          }
+        ],
+        "payrollSchedules": [
+          {
+            "payrollScheduleTypeCode": "Weekly",
+            "firstPaymentDate": "2021-01-01",
+            "firstWorkPeriodStartDate": "2021-01-01",
+            "firstWorkPeriodEndDate": "2021-01-01",
+            "nonBusinessDayPaymentCode": "EarlierAvailableDate"
+          }
+        ]
+      }
+}
+```
+
+
 ## Queries
+
+### Client graph
+
+TODO
+
+### Data Protection
 
 TODO
 
@@ -82,10 +175,13 @@ TODO
 
 TODO
 
+### Authorization context
+
+TODO
+
 
 ## Accessing Roll PaaS GraphQL
 
-TODO
 
 ### API Explorer Portal for developer access and documentation
 
@@ -93,5 +189,8 @@ TODO
 
 ### B2B Service Access
 
-TODO
+Roll PaaS GraphQL is accessible via ADP Marketplace. Developer documentation is available [here](https://developers.adp.com/). Specifically, the following are important topics:
+
+* [Generating a Certificate Signing Request](https://developers.adp.com/articles/general/generate-a-certificate-signing-request),
+* [Making Your First API Call Using Postman](https://developers.adp.com/articles/general/make-your-first-api-call-using-postman-1)
 
